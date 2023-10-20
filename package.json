@@ -1,6 +1,6 @@
 {
   "name": "preact-interactively",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "license": "MIT",
   "exports": "./src/index.jsx",
   "engines": {
@@ -23,7 +23,6 @@
     "@preact/preset-vite": "^2.6.0",
     "@rollup/plugin-node-resolve": "^15.2.3",
     "@rollup/plugin-replace": "^5.0.2",
-    "@unocss/preset-icons": "^0.45.18",
     "@vitejs/plugin-legacy": "^4.1.1",
     "babel-eslint": "^10.1.0",
     "babel-plugin-macros": "^3.1.0",
