@@ -33,7 +33,9 @@ const configZChartOpts = {
   },
   layout: {
     width: 600,
-    height: 400
+    height: 400,
+    minwidth: 100,
+    minheight: 100
   }
 };
 
@@ -53,8 +55,22 @@ const InteractiveDiagram = ({ data, labels = null, chartOpts = {} }) => {
   const autoRepeat = opts.cursor.autoRepeat;
   const lineColor = opts.line.color;
   const margin = { top: 10, right: 10, bottom: 40, left: 40 };
-  const width = opts.layout.width - margin.left - margin.right;
-  const height = opts.layout.height - margin.top - margin.bottom;
+  const minw =
+    opts.layout.minwidth && opts.layout.minwidth >= 2 * margin.left
+      ? opts.layout.minwidth
+      : 2 * margin.left;
+  const minh =
+    opts.layout.minheight && opts.layout.minheight >= 2 * margin.bottom
+      ? opts.layout.minheight
+      : 2 * margin.bottom;
+  const outerw =
+    opts.layout.width && opts.layout.width >= minw ? opts.layout.width : minw;
+  const outerh =
+    opts.layout.height && opts.layout.height >= minh
+      ? opts.layout.height
+      : minh;
+  const width = outerw - margin.left - margin.right;
+  const height = outerh - margin.top - margin.bottom;
 
   const padTo2Digits = (num) => {
     return num.toString().padStart(2, "0");
@@ -163,8 +179,13 @@ const InteractiveDiagram = ({ data, labels = null, chartOpts = {} }) => {
   const tickValues = mappedData
     .map((_, index) => (index % tickInterval === 0 ? index : -1))
     .filter((index) => index !== -1);
+  const cursorTextx = //xScale(currentPoint) + 10;
+    xScale(currentPoint) + minw <= width
+      ? xScale(currentPoint) + 10
+      : xScale(currentPoint) - minw;
+
   return (
-    <svg width={opts.layout.width} height={opts.layout.height} ref={svgRef}>
+    <svg width={outerw} height={outerh} ref={svgRef}>
       <g transform={`translate(${margin.left}, ${margin.top})`}>
         <Grid xScale={xScale} yScale={yScale} width={width} height={height} />
         <LinePath
@@ -187,21 +208,36 @@ const InteractiveDiagram = ({ data, labels = null, chartOpts = {} }) => {
         ))}
 
         {/* Elevation Annotation */}
-        <text
-          x={xScale(currentPoint) + 10}
-          y={yScale(mappedData[currentPoint].z)}
-          fill="#5A5A5A"
-        >
-          <tspan
-            x={xScale(currentPoint) + 10}
-            dy="0"
-          >{`${mappedData[currentPoint].z} ${zunit}`}</tspan>
-          <tspan x={xScale(currentPoint) + 10} dy="15">{`${
-            xkeyAsLabel && xkey === "time"
-              ? formatDateTime(mappedData[currentPoint].label)
-              : mappedData[currentPoint].label
-          }`}</tspan>
-        </text>
+        {opts.annotate.label && opts.annotate.label.length > 0 && (
+          <text
+            x={cursorTextx}
+            y={yScale(mappedData[currentPoint].z)}
+            fill={opts.annotate.color}
+          >
+            {opts.annotate.label.map((axis, index) => {
+              let dy = `${index * 15}`;
+              let ctent =
+                axis === "z"
+                  ? `${
+                      opts.z.digit > 0
+                        ? mappedData[currentPoint].z.toFixed(opts.z.digit)
+                        : mappedData[currentPoint].z
+                    } ${zunit}`
+                  : axis === "x"
+                  ? `${
+                      xkeyAsLabel && xkey === "time"
+                        ? formatDateTime(mappedData[currentPoint].label)
+                        : mappedData[currentPoint].label
+                    }`
+                  : axis;
+              return (
+                <tspan x={cursorTextx} dy={dy}>
+                  {ctent}
+                </tspan>
+              );
+            })}
+          </text>
+        )}
 
         {/* X and Y Axes with labels */}
         {opts.z.label && (
@@ -250,3 +286,4 @@ const InteractiveDiagram = ({ data, labels = null, chartOpts = {} }) => {
 };
 
 export default InteractiveDiagram;
+

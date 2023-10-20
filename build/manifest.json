@@ -1,6 +1,27 @@
 {
+  "_commonjs.js": {
+    "file": "commonjs.js"
+  },
+  "_prop-types.js": {
+    "file": "prop-types.js",
+    "imports": [
+      "_commonjs.js"
+    ]
+  },
+  "_vendor.js": {
+    "file": "vendor.js",
+    "imports": [
+      "_prop-types.js",
+      "_commonjs.js"
+    ]
+  },
   "index.html": {
-    "file": "assets/main-4960a2d9.js",
+    "file": "main.js",
+    "imports": [
+      "_vendor.js",
+      "_prop-types.js",
+      "_commonjs.js"
+    ],
     "isEntry": true,
     "src": "index.html"
   }

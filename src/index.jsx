@@ -9,7 +9,8 @@ const opts = {
   z: {
     key: "z",
     unit: "cm",
-    label: "Tide height"
+    label: "Tide height",
+    digit: 3
   },
   x: {
     key: "time",
@@ -26,7 +27,7 @@ const opts = {
   },
   annotate: {
     color: "#5A5A5A",
-    label: ["z", "x"]
+    label: ["x", "z"]
   },
   layout: {
     width: 600,

@@ -4,6 +4,7 @@ import preact from '@preact/preset-vite'
 import nodeResolve from '@rollup/plugin-node-resolve'
 import replace from '@rollup/plugin-replace'
 import viteCompression from 'vite-plugin-compression'
+import { SplitVendorChunkCache, staticImportedByEntry } from './config/splitvendorchunk.js'
 import legacy from '@vitejs/plugin-legacy'
 
 const clientPort = 8080
@@ -29,6 +30,9 @@ export default defineConfig({
   worker: {
     format: 'es',
   },
+  optimizeDeps:{
+     exclude:["d3"]
+  },
   build: {
     sourcemap: sourcemap_enable,
     manifest: true,
@@ -48,13 +52,36 @@ export default defineConfig({
       },
       output: {
         format: 'es',
+        entryFileNames: '[name].js', //https://github.com/vitejs/vite/issues/11804
+        chunkFileNames: '[name].js',
+        manualChunks (id: any, { getModuleInfo }) {
+          const cache = new Map()
+          const cssLangs = `\\.(css|less|sass|scss|styl|stylus|pcss|postcss)($|\\?)`;
+          const cssLangRE = new RegExp(cssLangs)
+          const isCSSRequest = (request: string): boolean => cssLangRE.test(request)
+          if (id.includes('prop-types')) {
+            return 'prop-types'
+          } else if (id.includes('node_modules') && !isCSSRequest(id) && staticImportedByEntry(id, getModuleInfo, cache)) {
+            return 'vendor'
+          } else if (id.includes('@babel+runtime-corejs3') || id.includes('@babel+runtime')) {
+            return 'babel-runtime'
+          } else if (id.includes('core-js')) {
+            return 'core-js'
+          } else if (id.includes('d3')) {
+            return 'd3'
+          } else if (id.includes('commonjs')) {
+            return 'commonjs'
+          } else {
+            console.log(JSON.stringify(id))
+          }
+        },
       },
       plugins: [
         nodeResolve({
           moduleDirectories: ['node_modules']
         }),
       ],
-      external: ['lodash', 'd3', '@vx', 'chart.js', '@preact/signals-core']
+      external: ['lodash', 'chart.js']
     }
   },
   define: {
@@ -70,7 +97,7 @@ export default defineConfig({
       "react-dom": "preact/compat",
       "react-dom/test-utils": "preact/test-utils",
       "react/jsx-runtime": "preact/jsx-runtime",
-      "d3": "https://cdn.jsdelivr.net/npm/d3/+esm",
+      "d3": "https://unpkg.com/d3?module", //"https://cdn.jsdelivr.net/npm/d3/+esm",
       //"@vx/axis": "https://cdn.jsdelivr.net/npm/@vx/axis/+esm",
       //"@vx/grid": "https://cdn.jsdelivr.net/npm/@vx/grid/+esm",
       //"@vx/scale": "https://cdn.jsdelivr.net/npm/@vx/scale/+esm",
