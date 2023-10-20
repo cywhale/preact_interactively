@@ -1,12 +1,15 @@
 {
   "name": "preact-interactively",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "license": "MIT",
-  "main": "src/index.js",
+  "exports": "./src/index.jsx",
+  "engines": {
+    "node": ">=16"
+  },
   "scripts": {
     "build": "vite build",
-    "serve": "export NODE_ENV=production && vite preview --port 3006",
-    "start": "export NODE_ENV=development && rimraf dev-dist && cross-env vite --force --port 3006",
+    "serve": "export NODE_ENV=production && vite preview --port 8080",
+    "start": "export NODE_ENV=development && rimraf dev-dist && cross-env vite --force --port 8080",
     "lint": "eslint src",
     "test": "jest ./tests"
   },
@@ -22,6 +25,8 @@
     "@rollup/plugin-replace": "^5.0.2",
     "@unocss/preset-icons": "^0.45.18",
     "@vitejs/plugin-legacy": "^4.1.1",
+    "babel-eslint": "^10.1.0",
+    "babel-plugin-macros": "^3.1.0",
     "cross-env": "^7.0.3",
     "esbuild": "^0.19.4",
     "eslint": "^4.5.0",
@@ -35,13 +40,10 @@
   },
   "dependencies": {
     "@preact/signals": "1.2.1",
-    "@vx/axis": "0.0.199",
-    "@vx/grid": "0.0.199",
-    "@vx/scale": "0.0.199",
-    "@vx/shape": "0.0.199",
-    "chart.js": "4.4.0",
-    "d3": "7.8.5",
-    "json-loader": "0.5.7",
+    "@vx/axis": "^0.0.199",
+    "@vx/grid": "^0.0.199",
+    "@vx/scale": "^0.0.199",
+    "@vx/shape": "^0.0.199",
     "preact": "10.18.1"
   },
   "jest": {
@@ -49,7 +51,7 @@
     "setupFiles": [
       "<rootDir>/src/tests/__mocks__/browserMocks.js"
     ],
-    "testURL": "http://localhost:3006",
+    "testURL": "http://localhost:8080",
     "moduleFileExtensions": [
       "js",
       "jsx"

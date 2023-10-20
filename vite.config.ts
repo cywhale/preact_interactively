@@ -6,7 +6,7 @@ import replace from '@rollup/plugin-replace'
 import viteCompression from 'vite-plugin-compression'
 import legacy from '@vitejs/plugin-legacy'
 
-const clientPort = 3006
+const clientPort = 8080
 const isProd = process.env.NODE_ENV === "production"
 const forceDebug = false
 const sourcemap_enable = isProd? forceDebug : true
@@ -54,7 +54,7 @@ export default defineConfig({
           moduleDirectories: ['node_modules']
         }),
       ],
-      //external: ['lodash']
+      external: ['lodash', 'd3', '@vx', 'chart.js', '@preact/signals-core']
     }
   },
   define: {
@@ -70,6 +70,13 @@ export default defineConfig({
       "react-dom": "preact/compat",
       "react-dom/test-utils": "preact/test-utils",
       "react/jsx-runtime": "preact/jsx-runtime",
+      "d3": "https://cdn.jsdelivr.net/npm/d3/+esm",
+      //"@vx/axis": "https://cdn.jsdelivr.net/npm/@vx/axis/+esm",
+      //"@vx/grid": "https://cdn.jsdelivr.net/npm/@vx/grid/+esm",
+      //"@vx/scale": "https://cdn.jsdelivr.net/npm/@vx/scale/+esm",
+      //"@vx/shape": "https://cdn.jsdelivr.net/npm/@vx/shape/+esm",
+      "chart.js/auto": "https://cdn.jsdelivr.net/npm/chart.js/auto/+esm",
+      //"chart.js": "https://esm.run/chart.js"
     }
   },
   plugins: [
@@ -109,19 +116,7 @@ export default defineConfig({
     host: "0.0.0.0",
     port: clientPort,
     strictPort: true,
-    hmr:
-    { host: 'localhost',
-      protocol: 'ws',
-      path: '/socket',
-    },
-    proxy: {
-      '/socket': {
-          target: 'ws://localhost:'+clientPort,
-          ws: true,
-          secure: true,
-          changeOrigin: true
-      }
-    },
+    hmr: false,
     //https: {
     //  key: fs.readFileSync(`${__dirname}/config/privkey.pem`),
     //  cert: fs.readFileSync(`${__dirname}/config/fullchain.pem`),

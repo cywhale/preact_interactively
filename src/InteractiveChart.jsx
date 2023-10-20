@@ -1,7 +1,7 @@
 import { signal } from "@preact/signals";
 import { useState, useEffect, useRef } from "preact/hooks";
-import { Chart } from "chart.js";
-import "chart.js/auto";
+//import { Chart } from "chart.js";
+import Chart from "chart.js/auto";
 
 const highlightIndex = signal(0);
 const setHighlightIndex = (val) => {
