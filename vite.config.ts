@@ -61,12 +61,14 @@ export default defineConfig({
           const isCSSRequest = (request: string): boolean => cssLangRE.test(request)
           if (id.includes('prop-types')) {
             return 'prop-types'
+          } else if (id.includes('InteractiveDiagram')) {
+            return 'InteractiveDiagram'
+          } else if (id.includes('InteractiveChart')) { 
+            return 'InteractiveChart'
           } else if (id.includes('node_modules') && !isCSSRequest(id) && staticImportedByEntry(id, getModuleInfo, cache)) {
             return 'vendor'
           } else if (id.includes('@babel+runtime-corejs3') || id.includes('@babel+runtime')) {
             return 'babel-runtime'
-          } else if (id.includes('core-js')) {
-            return 'core-js'
           } else if (id.includes('d3')) {
             return 'd3'
           } else if (id.includes('commonjs')) {

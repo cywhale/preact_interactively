@@ -1,4 +1,16 @@
 {
+  "_InteractiveChart.js": {
+    "file": "InteractiveChart.js",
+    "imports": [
+      "_vendor.js"
+    ]
+  },
+  "_InteractiveDiagram.js": {
+    "file": "InteractiveDiagram.js",
+    "imports": [
+      "_vendor.js"
+    ]
+  },
   "_commonjs.js": {
     "file": "commonjs.js"
   },
@@ -19,6 +31,8 @@
     "file": "main.js",
     "imports": [
       "_vendor.js",
+      "_InteractiveChart.js",
+      "_InteractiveDiagram.js",
       "_prop-types.js",
       "_commonjs.js"
     ],

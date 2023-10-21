@@ -1,13 +1,11 @@
-import { Fragment, render } from "preact";
-import { useState, useEffect, useRef } from "preact/hooks";
-import { signal, effect } from "@preact/signals";
-//import jsonData from "./data.json";
-//import tideData from "./tideData.json";
-import InteractiveChart from "./InteractiveChart";
-import InteractiveDiagram from "./InteractiveDiagram";
+import { Fragment, render } from "preact"
+import { useState, useEffect, useRef } from "preact/hooks"
+import { signal, effect } from "@preact/signals"
+import InteractiveChart from "./components/InteractiveChart"
+import InteractiveDiagram from "./components/InteractiveDiagram"
 
 const dataUrl = 'https://raw.githubusercontent.com/cywhale/preact_interactively/main/data/'
-const datasrc = 'tideData.json' //'data.json' //bathymetry data
+const datasrc = 'tideData.json' //'bathyData.json' //bathymetry data
 const jsonData = signal({})
 const isReady = signal(false)
 const sigErr = signal('')
@@ -55,8 +53,8 @@ const opts = {
     label: ["x", "z"]
   },
   layout: {
-    width: 600,
-    height: 400
+    width: 540,
+    height: 300
   }
 };
 
