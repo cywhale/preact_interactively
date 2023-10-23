@@ -61,6 +61,10 @@ export default defineConfig({
           const isCSSRequest = (request: string): boolean => cssLangRE.test(request)
           if (id.includes('prop-types')) {
             return 'prop-types'
+          } else if (id.includes('@vx')) {
+            return 'vx'
+          } else if (id.includes('d3')) {
+            return 'd3'
           } else if (id.includes('InteractiveDiagram')) {
             return 'InteractiveDiagram'
           } else if (id.includes('InteractiveChart')) { 
@@ -69,8 +73,6 @@ export default defineConfig({
             return 'vendor'
           } else if (id.includes('@babel+runtime-corejs3') || id.includes('@babel+runtime')) {
             return 'babel-runtime'
-          } else if (id.includes('d3')) {
-            return 'd3'
           } else if (id.includes('commonjs')) {
             return 'commonjs'
           } else {
@@ -99,7 +101,7 @@ export default defineConfig({
       "react-dom": "preact/compat",
       "react-dom/test-utils": "preact/test-utils",
       "react/jsx-runtime": "preact/jsx-runtime",
-      "d3": "https://unpkg.com/d3?module", //"https://cdn.jsdelivr.net/npm/d3/+esm",
+      //"d3": "https://unpkg.com/d3?module", //"https://cdn.jsdelivr.net/npm/d3/+esm",
       //"@vx/axis": "https://cdn.jsdelivr.net/npm/@vx/axis/+esm",
       //"@vx/grid": "https://cdn.jsdelivr.net/npm/@vx/grid/+esm",
       //"@vx/scale": "https://cdn.jsdelivr.net/npm/@vx/scale/+esm",

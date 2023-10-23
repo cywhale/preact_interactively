@@ -1,6 +1,6 @@
 import { signal } from "@preact/signals";
 import { useState, useEffect, useRef } from "preact/hooks";
-import * as d3 from "d3";
+//import * as d3 from "d3";
 import { Grid } from "@vx/grid";
 import { LinePath } from "@vx/shape";
 import { scaleLinear } from "@vx/scale";
@@ -111,7 +111,8 @@ const InteractiveDiagram = ({ data, labels = null, chartOpts = {} }) => {
   });
 
   const yScale = scaleLinear({
-    domain: [d3.min(data[zkey]), d3.max(data[zkey])],
+    //domain: [d3.min(data[zkey]), d3.max(data[zkey])],
+    domain: [Math.min(...data[zkey]), Math.max(...data[zkey])],
     range: [height, 0] // SVG height - flipped for correct orientation
   });
 

@@ -8,11 +8,15 @@
   "_InteractiveDiagram.js": {
     "file": "InteractiveDiagram.js",
     "imports": [
-      "_vendor.js"
+      "_vendor.js",
+      "_vx.js"
     ]
   },
   "_commonjs.js": {
     "file": "commonjs.js"
+  },
+  "_d3.js": {
+    "file": "d3.js"
   },
   "_prop-types.js": {
     "file": "prop-types.js",
@@ -23,8 +27,15 @@
   "_vendor.js": {
     "file": "vendor.js",
     "imports": [
-      "_prop-types.js",
       "_commonjs.js"
+    ]
+  },
+  "_vx.js": {
+    "file": "vx.js",
+    "imports": [
+      "_d3.js",
+      "_prop-types.js",
+      "_vendor.js"
     ]
   },
   "index.html": {
@@ -33,8 +44,10 @@
       "_vendor.js",
       "_InteractiveChart.js",
       "_InteractiveDiagram.js",
-      "_prop-types.js",
-      "_commonjs.js"
+      "_commonjs.js",
+      "_vx.js",
+      "_d3.js",
+      "_prop-types.js"
     ],
     "isEntry": true,
     "src": "index.html"
