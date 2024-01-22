@@ -1,10 +1,10 @@
 import { signal } from "@preact/signals";
 import { useState, useEffect, useRef } from "preact/hooks";
 //import * as d3 from "d3";
-import { Grid } from "@vx/grid";
-import { LinePath } from "@vx/shape";
-import { scaleLinear } from "@vx/scale";
-import { AxisBottom, AxisLeft } from "@vx/axis";
+import { Grid } from "@visx/grid";
+import { LinePath } from "@visx/shape";
+import { scaleLinear } from "@visx/scale";
+import { AxisBottom, AxisLeft } from "@visx/axis";
 
 const cursorPause = signal(false);
 const configZChartOpts = {

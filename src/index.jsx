@@ -1,8 +1,12 @@
-import { Fragment, render } from "preact"
+// @unocss-include
+import { render } from "preact"
 import { useState, useEffect, useRef } from "preact/hooks"
 import { signal, effect } from "@preact/signals"
 import InteractiveChart from "./components/InteractiveChart"
 import InteractiveDiagram from "./components/InteractiveDiagram"
+import TerrainPlotly from "./components/TerrainPlotly"
+
+import 'uno.css'
 
 const dataUrl = 'https://raw.githubusercontent.com/cywhale/preact_interactively/main/data/'
 const datasrc = 'tideData.json' //'bathyData.json' //bathymetry data
@@ -60,11 +64,16 @@ const opts = {
 
 const App = () => {
   return (
-    <Fragment>
+    <div class="flex flex-col">
+      <div>
+        <TerrainPlotly />
+      </div>
+      <div>
+      <h2>Interactive Chart</h2>
       { sigErr.value && <div><span>sigErr.value</span></div> }
       { !isReady.value && <div><p style="color:#98AFC7;">Loading...</p></div> }
       { isReady.value && 
-        <div style="position:absolute;left:5%;top:5%;padding:10px">
+        <div class="absolute left-[5%] top-[30%] p-2.5">
           <InteractiveDiagram data={jsonData.value} chartOpts={opts} />
           <InteractiveChart
             data={jsonData.value}
@@ -75,8 +84,9 @@ const App = () => {
           />
         </div>
       }
-    </Fragment>
-  );
+      </div>
+    </div>
+  )
 }
 
 if (typeof window !== "undefined") {

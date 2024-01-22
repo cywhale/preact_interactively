@@ -6,6 +6,7 @@ import replace from '@rollup/plugin-replace'
 import viteCompression from 'vite-plugin-compression'
 import { SplitVendorChunkCache, staticImportedByEntry } from './config/splitvendorchunk.js'
 import legacy from '@vitejs/plugin-legacy'
+import Unocss from 'unocss/vite'
 
 const clientPort = 8080
 const isProd = process.env.NODE_ENV === "production"
@@ -106,12 +107,13 @@ export default defineConfig({
       //"@vx/grid": "https://cdn.jsdelivr.net/npm/@vx/grid/+esm",
       //"@vx/scale": "https://cdn.jsdelivr.net/npm/@vx/scale/+esm",
       //"@vx/shape": "https://cdn.jsdelivr.net/npm/@vx/shape/+esm",
+      "plotly.js-dist": "https://cdn.jsdelivr.net/npm/plotly.js-dist@2.28.0/+esm",
       "chart.js/auto": "https://cdn.jsdelivr.net/npm/chart.js/auto/+esm",
       //"chart.js": "https://esm.run/chart.js"
     }
   },
   plugins: [
-    //Unocss(),
+    Unocss(),
     preact({
       babel: {
         plugins: ["macros"],
